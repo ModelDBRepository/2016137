@@ -1,0 +1,16 @@
+This is the readme for the models associated with the paper:
+
+V. Takács, Z. Bardóczi, Á. Orosz, Á. Major, L. Tar, P. Berki, P. Papp, M. I. Mayer, H. Sebők, L. Zsolt, K. E. Sós, S. Káli, T. F. Freund, G. Nyiri (2024): SYNAPTIC AND DENDRITIC ARCHITECTURE OF TWO TYPES OF HIPPOCAMPAL SOMATOSTATIN INTERNEURONS
+
+The `Simplified_models` folder contains the models having detailed morphology but simplified biophysics, containing only a passive "leak" conductance and a voltage-dependent Ih conductance.
+
+- The `modfiles` subfolder contains the nmodl files that need to be compiled before the use of the models.
+- The `HOC` subfolder contains the .hoc models separately for each morphology. Each hoc file contains a process called `syn_per_area_define()`. This process (when called) defines the high conductance state (see paper), and requires two .dat files corresponding to the model that can be found in the `Syn_per_area_for_HCS` subfolder. One must either put these files in the same folder where the hocs are or set the path correctly. 
+- The `HOC_for_mito` subfolder contains modified versions of the hoc files in the HOC subfolder. In these modified files the value of the parameter `Ra` is modified by a multiplier which is inversely proportional to the change in the dendritic cross-section when taking into account that mitochondria take up space and therefore reduce the free space where currents can flow axially in the dendrites. 
+- In the `Parameters_from_neuroptimus` subfolder you can find the csv files that contain 20 parameter sets for each morphology, which were the results of the parameter fitting process done by the Neuroptimus software. These parameter sets allow the construction of 20 different versions of each model by setting the relevant parameters in the `biophys()` procedure of the corresponding `.hoc` file.
+	
+The `Detailed_models` folder contains the models that have both detailed morphology and detailed biophysics, and therefore exhibit spiking behavior. The channel models and their distributions were based on [Lawrence et al. (2006)](https://doi.org/10.1523/JNEUROSCI.3521-06.2006).
+- The `modfiles` subfolder contains the nmodl files that need to be compiled before the use of the models. 
+- The `HOC` subfolder contains the `.hoc` models separately for each morphology.
+- In the `Parameters_from_neuroptimus` subfolder you can find the csv files that contain 10 parameter sets for each morphology, which were the results of the parameter fitting process done by the Neuroptimus software. These parameter sets allow the construction of 10 different versions of each model by setting the relevant parameters in the `biophys()` procedure of the corresponding `.hoc` file.
+- The script `Theta_excitation.py` is an example of the possible usage of these detailed models and the data from the paper. The script returns the response of a model to the theta-rhythmic excitation we described in the paper, and saves the resulting trace as a `.dat` file and an `.svg` image for further evaluation. `NetStimVariable.mod`, `stim_PSP_attenuation_test_olm.json` and `stim_PSP_attenuation_test_hs.json` are required by the script. The `NetStimVariable.mod` needs to be compiled before running the python code.
